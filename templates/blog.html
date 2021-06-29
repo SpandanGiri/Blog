@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog{%endblock%}
+
+
+
+{% block body %}
+
+<style>
+
+</style>
+
+
+
+  
+  
+
+  <!--Blog -->
+
+<div class="quote-container d-flex justify-content-center">
+    <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card p-3">
+            <figure class="p-3 mb-0">
+                <blockquote class="blockquote">
+                    <p>{{blog}} <i style="font-size: smaller;"> ....read more</i></p>
+                </blockquote>
+                <figcaption class="blockquote-footer mb-0 text-muted my-1">
+                    {{author}}
+                </figcaption>
+            </figure>
+            
+            <button type="button" class="btn  btn-outline btn-primary btn-sm " data-toggle="modal" data-target="#blogModal">View</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="blogModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Title</h4>
+        </div>
+        <div class="modal-body">
+          <p>Bolg.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+
+
+  
+
+
+
+
+{%endblock%}
