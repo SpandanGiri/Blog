@@ -1,16 +1,16 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from .forms import UserRegisterForm
 
 
 
 def register(request):
-    form=UserCreationForm()
+    form=UserRegisterForm()
     
 
     if(request.method=='POST'):
-        form=UserCreationForm(request.POST)
+        form=UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username=form.cleaned_data.get('username')
@@ -19,6 +19,7 @@ def register(request):
             return redirect('http://127.0.0.1:8000/blog/')
             
     else:
-        form=UserCreationForm()
+        form=UserRegisterForm()
+        
         
     return render(request, 'users/register.html',{'form':form})

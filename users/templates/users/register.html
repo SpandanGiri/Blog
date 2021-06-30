@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+
 <!doctype html>
 <html lang="en">
 
@@ -30,7 +32,7 @@
       width: 70%;
     }
     form{
-      margin-left: 30px;
+      margin: 30px 30px 30px 30px;
     }
 </style>
 
@@ -62,7 +64,7 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Join Today</legend>
-            {{ form}}
+            {{ form|crispy }}
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Sign Up</button>
@@ -77,13 +79,7 @@
     </div>
 </div>
   
-  {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
+  
 
 
 
