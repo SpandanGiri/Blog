@@ -15,15 +15,22 @@
 
 
 <style>
-  .container {
+  .content-section {
         height: 100vh;
         width: 100%;
-        background-color: antiquewhite;
+        background-color: white;
+        padding-left: 300px;
+        padding-top: 40px;
     }
-    .form-container{
-        height: 40vh;
-        width: 100%;
+    
         
+    
+    .form-conatiner{
+      background-color:antiquewhite;
+      width: 70%;
+    }
+    form{
+      margin-left: 30px;
     }
 </style>
 
@@ -50,6 +57,7 @@
 
 
   <div class="content-section">
+    <div class="form-conatiner">
     <form method="POST">
         {% csrf_token %}
         <fieldset class="form-group">
@@ -60,14 +68,22 @@
             <button class="btn btn-outline-info" type="submit">Sign Up</button>
         </div>
     </form>
-    <div class="border-top pt-3">
+
+    <div class="border-top pt-3 mx-4">
         <small class="text-muted">
             Already Have An Account? <a class="ml-2" href="#">Sign In</a>
         </small>
     </div>
+    </div>
 </div>
   
-  
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
 
 
