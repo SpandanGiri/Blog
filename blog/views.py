@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 
 
+
 def blog(request):
     para='''Ross Enamait’s website is dedicated to high performance conditioning, strength, and
             athletic development. The longtime trainer and boxing coach understands that a successful
@@ -15,6 +16,7 @@ def blog(request):
     space=9
     content_blog=''
 
+
     for i in range(len(para)):
         if(c!=space):
             if(para[i]==' '):
@@ -24,7 +26,11 @@ def blog(request):
             break
     content_blog=content_blog
     
-    params={'blog':content_blog, 'author':'DB'}    
+    context=Post.objects.filter(title='Last Reps')
+    print(context[0])
+    context=context[0]
+    
+    params={'blog':context, 'author':'DB'}    
     
     
     return(render(request,'blog.html',params))
