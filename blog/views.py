@@ -1,40 +1,97 @@
+from django.db import models
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin,UserPassesTestMixin
+from django.views.generic import ListView , DetailView , CreateView ,UpdateView, DeleteView
 
 
 
 
 def blog(request):
-    para='''Ross Enamait’s website is dedicated to high performance conditioning, strength, and
-            athletic development. The longtime trainer and boxing coach understands that a successful
-            fitness regimen boils down to finding what works for you. His blog is a great resource for 
-            information about different kinds of training — from fitness
-            fundamentals to old-school workouts like jumping rope to philosophical riffs on mental endurance.'''
+   
     
+    context=Post.objects.all()
+    all_content=[]
     
-    c=0
-    space=9
-    content_blog=''
+    for i in context:
+        content=i.content
 
-
-    for i in range(len(para)):
-        if(c!=space):
-            if(para[i]==' '):
-                c+=1
-            content_blog+=para[i]
-        else:
-            break
-    content_blog=content_blog
+        #Conent Shortner
+        c=0
+        space=9
+        content_blog=''
+        
+        for j in range(len(content)):
+            if(c!=space):
+                if(content[j]==' '):
+                    c+=1
+                content_blog+=content[j]
+            else:
+                break
+        content_blog=content_blog
+        all_content.append(content_blog)
+        
     
-    context=Post.objects.filter(title='Last Reps')
-    print(context[0])
-    context=context[0]
     
-    params={'blog':context, 'author':'DB'}    
+    
+    
+    n=len(context)
+    
+    for i in range(n):
+        print(context[i].title)
+        print(all_content[i])
+    
+    params={'blog':all_content ,'context':context,'n':range(n)}    
     
     
     return(render(request,'blog.html',params))
 
+
+
+
+class PostListView(ListView):
+    model=Post
+    template_name='blog.html'
+    context_object_name='context'
+    
+class PostDetailView(DetailView):
+    model=Post
+    
+class PostCreateView(CreateView,LoginRequiredMixin):
+    model=Post
+    fields=['title','content','date']
+    
+    def form_valid(self,form):
+        form.instance.author=self.request.user
+        return super().form_valid(form)
+    
+class PostUpdateView(UpdateView,LoginRequiredMixin,UserPassesTestMixin):
+    model=Post
+    fields=['title','content','date']
+    
+    def form_valid(self,form):
+        form.instance.author=self.request.user
+        return super().form_valid(form)
+    
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+        
+    
+class PostDeleteView(DeleteView,LoginRequiredMixin,UserPassesTestMixin):
+    model=Post
+    success_url='/blog'
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+    
+    
+    
 
 
 def about(request):

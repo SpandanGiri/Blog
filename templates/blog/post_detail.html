@@ -10,30 +10,27 @@
 
 <!--Blog -->
 
-{% for i in context %}
-
-
-<div class="quote-container d-flex justify-content-center" >
+<div class="quote-container d-flex justify-content-center">
   <div class="col-sm-6 col-lg-4 mb-4">
     <div class="card p-3" id="blog-container">
       <figure class="p-3 mb-0">
-        <h2>{{i.title}}</h2>
+        <h2>{{object.title}}</h2>
         <blockquote class="blockquote">
-          <p>{{i.content|truncatechars:75}} <i style="font-size: smaller;"><a href="{% url 'blog-detail' i.id %}" > ....read more</a></i></p>
+          <p>{{object.content}}</p>
         </blockquote>
         <figcaption class="blockquote-footer mb-0 text-muted my-1">
-          {{i.author}}
+          {{object.author}}
         </figcaption>
+
+        {% if object.author == user %}
+          <a href="{% url 'blog-update' object.id %}" class="btn btn-outline-primary btn-sm">Update</a>
+          <a href="{% url 'blog-delete' object.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+        {% endif %}
       </figure>
 
-      
     </div>
   </div>
 </div>
-
-
-
-{% endfor %}
 
 
 
